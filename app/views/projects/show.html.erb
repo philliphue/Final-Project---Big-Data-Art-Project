@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h3>Project: <%= @project.project_title %></h3>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <% @project.project_images.each do |image| %>
+      <div class="col-xs-6 col-md-3" class="img-responsive">
+        <a href="/images/<%= image.image_id %>" class="thumbnail" class="btn btn-primary">
+          <td><image src="<%= image.image_url %>"></td>
+        </a>
+        <% if current_user.id == @project.user_id  %>
+          <a href="/delete_project_image/<%= image.id %>" class="btn btn-grey" rel="nofollow">
+            Delete
+          </a>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+
+      <dt>Theme</dt>
+      <dd><%= @project.theme %></dd>
+
+      <dt>Mood</dt>
+      <dd><%= @project.mood %></dd>
+
+      <dt>Primary color</dt>
+      <dd><%= @project.primary_color %></dd>
+
+      <dt>Secondary color</dt>
+      <dd><%= @project.secondary_color %></dd>
+
+      <dt>Project template</dt>
+      <dd><%= @project.project_template %></dd>
+
+      <dt>Private</dt>
+      <dd><%= @project.private %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/projects" class="btn btn-primary">
+        Back
+      </a>
+      <% if current_user.id == @project.user_id  %>
+        <a href="/projects/<%= @project.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_project/<%= @project.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>

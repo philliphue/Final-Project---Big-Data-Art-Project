@@ -1,0 +1,90 @@
+<!-- Validation failure messages -->
+<% if @project.errors.any? %>
+  <% @project.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Project #<%= @project.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_project/<%= @project.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for project_title -->
+      <div class="form-group">
+        <label for="project_title" class="control-label">
+          Project title
+        </label>
+
+        <input type="text" id="project_title" name="project_title" placeholder="Project title" class="form-control" value="<%= @project.project_title %>">
+      </div>
+
+      <!-- Label and input for theme -->
+      <div class="form-group">
+        <label for="theme" class="control-label">
+          Theme
+        </label>
+
+        <input type="text" id="theme" name="theme" placeholder="Theme" class="form-control" value="<%= @project.theme %>">
+      </div>
+
+      <!-- Label and input for mood -->
+      <div class="form-group">
+        <label for="mood" class="control-label">
+          Mood
+        </label>
+
+        <input type="text" id="mood" name="mood" placeholder="Mood" class="form-control" value="<%= @project.mood %>">
+      </div>
+
+      <!-- Label and input for primary_color -->
+      <div class="form-group">
+        <label for="primary_color" class="control-label">
+          Primary color
+        </label>
+
+        <input type="text" id="primary_color" name="primary_color" placeholder="Primary color" class="form-control" value="<%= @project.primary_color %>">
+      </div>
+
+      <!-- Label and input for secondary_color -->
+      <div class="form-group">
+        <label for="secondary_color" class="control-label">
+          Secondary color
+        </label>
+
+        <input type="text" id="secondary_color" name="secondary_color" placeholder="Secondary color" class="form-control" value="<%= @project.secondary_color %>">
+      </div>
+
+      <!-- Label and input for project_template -->
+      <div class="form-group">
+        <label for="project_template" class="control-label">
+          Project template
+        </label>
+
+        <input type="text" id="project_template" name="project_template" placeholder="Project template" class="form-control" value="<%= @project.project_template %>">
+      </div>
+
+      <!-- Label and input for private -->
+      <div class="checkbox">
+        <label for="private">
+          <input type="checkbox" id="private" name="private" value="1" <%= "checked" if @project.private %>>
+          Private
+        </label>
+      </div>
+
+      <button class="btn btn-warning">
+        Update Project
+      </button>
+      or
+      <a href="/projects/<%= @project.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<div class="page-header">
+  <h1>
+    Images
+    <a href="/images/new" class="btn btn-lg btn-success">New Image</a>
+  </h1>
+</div>
+
+<div class="filter_options_container">
+
+<div class="container">
+  <div class="row">
+
+    <form action="/search" method="get">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for image_name -->
+      <div class="col-xs-6 col-md-3">
+      <div class="form-group">
+        <label for="artist" class="control-label">
+          Artist
+        </label>
+
+        <%= select_tag(:artist, options_from_collection_for_select(Image.select(:artist).distinct, :artist, :artist, params[:artist].to_i), :prompt => "Please select", :class => "form-control") %>
+      </div>
+      </div>
+
+      <!-- Label and input for image_name -->
+      <div class="col-xs-6 col-md-3">
+      <div class="form-group">
+        <label for="artwork_title" class="control-label">
+          Artwork
+        </label>
+
+        <%= select_tag(:artwork_title, options_from_collection_for_select(Image.select(:artwork_title).distinct, :artwork_title, :artwork_title), :prompt => "Please select", :class => "form-control") %>
+      </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+      <div class="form-group">
+        <label for="theme" class="control-label">
+          Theme
+        </label>
+
+        <%= select_tag(:theme, options_from_collection_for_select(Image.select(:theme).distinct, :theme, :theme), :prompt => "Please select", :class => "form-control") %>
+      </div>
+      </div>
+
+
+      <div class="col-xs-6 col-md-3">
+      <div class="form-group">
+        <label for="theme" class="control-label">
+          Mood
+        </label>
+        <%= select_tag(:mood, options_from_collection_for_select(Image.select(:mood).distinct, :mood, :mood), :prompt => "Please select", :class => "form-control") %>
+      </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+      <div class="form-group">
+        <label for="primary_color" class="control-label">
+          Primary Color
+        </label>
+
+        <%= select_tag(:primary_color, options_from_collection_for_select(Image.select(:primary_color).distinct, :primary_color, :primary_color), :prompt => "Please select", :class => "form-control") %>
+      </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+      <div class="form-group">
+        <label for="secondary_color" class="control-label">
+          Secondary Color
+        </label>
+
+        <%= select_tag(:secondary_color, options_from_collection_for_select(Image.select(:secondary_color).distinct, :secondary_color, :secondary_color), :prompt => "Please select", :class => "form-control") %>
+      </div>
+      </div>
+
+       <div class="col-xs-6 col-md-3">
+      <button class="btn btn-success">
+        Filter
+      </button>
+      </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @images.each do |image| %>
+      <div class="col-xs-6 col-md-3" class="img-responsive">
+        <a href="/images/<%= image.id %>" class="thumbnail" class="btn btn-primary">
+          <td><img src="<%= image.image_url %>"></td>
+        </a>
+        <div class="col-xs-6 col-md-3" class="img-responsive">
+          <% if current_user.liked_images.where({:id => image.id}).present? %>
+              <a href="/delete_like/<%= image.id %>" class="btn btn-link">
+                <i class="fa fa-heart"></i>
+              </a>
+          <% else %>
+            <form action="/create_like" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden">
+
+              <input type="hidden" name="image_id" value="<%= image.id %>">
+
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+              <button class="btn btn-link">
+                <i class="fa fa-heart-o"></i>
+              </button>
+            </form>
+          <% end %>
+        </div>
+        <div>
+          <form action="add_to_project" method="post">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+            <div class="col-xs-9 col-md-9">
+                <%= select_tag(:project_id, options_from_collection_for_select(Project.all, :id, :project_title), :prompt => "Add to Project", :class => "form-control") %>
+
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+              <input type="hidden" name="image_url" value="<%= image.image_url %>">
+
+              <input type="hidden" name="image_id" value="<%= image.id %>">
+
+              <div class="col-xs-9 col-md-9">
+                <button class="btn btn-link">
+                  Add
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

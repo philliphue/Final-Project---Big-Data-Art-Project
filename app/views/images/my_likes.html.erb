@@ -1,0 +1,58 @@
+<div class="page-header">
+  <h1>
+    My Likes
+  </h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @images.each do |image| %>
+      <div class="col-xs-6 col-md-3" class="img-responsive">
+        <a href="/images/<%= image.id %>" class="thumbnail" class="btn btn-primary">
+          <td><img src="<%= image.image_url %>"></td>
+        </a>
+        <div class="col-xs-6 col-md-3" class="img-responsive">
+          <% if current_user.liked_images.where({:id => image.id}).present? %>
+              <a href="/delete_like/<%= image.id %>" class="btn btn-link">
+                <i class="fa fa-heart"></i>
+              </a>
+          <% else %>
+            <form action="/create_like" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden">
+
+              <input type="hidden" name="image_id" value="<%= image.id %>">
+
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+              <button class="btn btn-link">
+                <i class="fa fa-heart-o"></i>
+              </button>
+            </form>
+          <% end %>
+        </div>
+        <div>
+          <form action="add_to_project" method="post">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+            <div class="col-xs-9 col-md-9">
+                <%= select_tag(:project_id, options_from_collection_for_select(Project.all, :id, :project_title), :prompt => "Add to Project", :class => "form-control") %>
+
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+              <input type="hidden" name="image_url" value="<%= image.image_url %>">
+
+              <input type="hidden" name="image_id" value="<%= image.id %>">
+
+              <div class="col-xs-9 col-md-9">
+                <button class="btn btn-link">
+                  Add
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

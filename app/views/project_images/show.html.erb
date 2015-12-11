@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Project Image #<%= @project_image.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Image</dt>
+      <dd><%= @project_image.image_id %></dd>
+
+      <dt>Project</dt>
+      <dd><%= @project_image.project_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/project_images" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/project_images/<%= @project_image.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_project_image/<%= @project_image.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

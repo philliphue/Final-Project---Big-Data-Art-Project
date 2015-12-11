@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1>
+    Project images
+    <a href="/project_images/new" class="btn btn-lg btn-success">New Project image</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Image</th>
+        <th>Project</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @project_images.each do |project_image| %>
+      <tr>
+        <td><%= project_image.image_id %></td>
+        <td><%= project_image.project_id %></td>
+        <td>
+          <a href="/project_images/<%= project_image.id %>" class="btn btn-primary">Show</a>
+          <a href="/project_images/<%= project_image.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_project_image/<%= project_image.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

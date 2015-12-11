@@ -1,0 +1,106 @@
+<center>
+<div class="page-header">
+  <h3>Image: <%= @image.image_name %></h3>
+</div>
+</center>
+
+<center>
+<div class="container">
+  <div class="row">
+    <div class="img-responsive">
+      <td><img src="<%= @image.image_url %>" width="30%"></td>
+
+    </div>
+  </div>
+</div>
+</center>
+
+<center>
+<div class="container">
+  <div class="row">
+    <div class="img-responsive">
+      <% if current_user.liked_images.where({:id => @image.id}).present? %>
+        <a href="/delete_like/<%= @image.id %>" class="btn btn-link">
+          <i class="fa fa-heart"></i>
+        </a>
+      <% else %>
+        <form action="/create_like" method="post">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden">
+
+          <input type="hidden" name="image_id" value="<%= @image.id %>">
+
+          <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+          <button class="btn btn-link">
+            <i class="fa fa-heart-o"></i>
+          </button>
+        </form>
+      <% end %>
+    </div>
+    <div class="img-responsive">
+      <form action="/add_to_project" method="post">
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <div class="col-xs-3 col-md-3">
+            <%= select_tag(:project_id, options_from_collection_for_select(Project.all, :id, :project_title), :prompt => "Add to Project", :class => "form-control") %>
+
+          <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+          <input type="hidden" name="image_url" value="<%= @image.image_url %>">
+
+          <input type="hidden" name="image_id" value="<%= @image.id %>">
+
+          <div class="col-xs-9 col-md-9">
+            <button class="btn btn-link">
+              Add
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</center>
+
+<center>
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+
+      <dt>Artwork title</dt>
+      <dd><%= @image.artwork_title %></dd>
+
+      <dt>Artist</dt>
+      <dd><%= @image.artist %></dd>
+
+      <dt>Theme</dt>
+      <dd><%= @image.theme %></dd>
+
+      <dt>Mood</dt>
+      <dd><%= @image.mood %></dd>
+
+      <dt>Primary color</dt>
+      <dd><%= @image.primary_color %></dd>
+
+      <dt>Secondary color</dt>
+      <dd><%= @image.secondary_color %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/images" class="btn btn-primary">
+        Back
+      </a>
+      <% if current_user.id == @image.user_id  %>
+        <a href="/images/<%= @image.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_image/<%= @image.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>
+</center>

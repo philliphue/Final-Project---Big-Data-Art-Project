@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @project_image.errors.any? %>
+  <% @project_image.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Project Image</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_project_image" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for image_id -->
+      <div class="form-group">
+        <label for="image_id" class="control-label">
+          Image
+        </label>
+
+        <input type="text" id="image_id" name="image_id" placeholder="Image" class="form-control" value="<%= @project_image.image_id %>">
+      </div>
+
+      <!-- Label and input for project_id -->
+      <div class="form-group">
+        <label for="project_id" class="control-label">
+          Project
+        </label>
+
+        <input type="text" id="project_id" name="project_id" placeholder="Project" class="form-control" value="<%= @project_image.project_id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Project Image
+      </button>
+      or
+      <a href="/project_images">Cancel</a>
+    </form>
+  </div>
+</div>

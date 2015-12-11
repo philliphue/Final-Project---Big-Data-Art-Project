@@ -1,0 +1,104 @@
+<!-- Validation failure messages -->
+<% if @image.errors.any? %>
+  <% @image.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Image</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_image" method="post" enctype="multipart/form-data">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for image_url -->
+      <div class="form-group">
+        <label for="image_url" class="control-label">
+          Image Upload
+        </label>
+
+        <input type="file" id="image_url" name="image_url" placeholder="Image url" class="form-control" value="<%= @image.image_url %>">
+      </div>
+
+      <!-- Label and input for image_name -->
+      <div class="form-group">
+        <label for="image_name" class="control-label">
+          Image name
+        </label>
+
+        <input type="text" id="image_name" name="image_name" placeholder="Image name" class="form-control" value="<%= @image.image_name %>">
+      </div>
+
+      <!-- Label and input for artwork_title -->
+      <div class="form-group">
+        <label for="artwork_title" class="control-label">
+          Artwork title
+        </label>
+
+        <input type="text" id="artwork_title" name="artwork_title" placeholder="Artwork title" class="form-control" value="<%= @image.artwork_title %>">
+      </div>
+
+      <!-- Label and input for artist -->
+      <div class="form-group">
+        <label for="artist" class="control-label">
+          Artist
+        </label>
+
+        <input type="text" id="artist" name="artist" placeholder="Artist" class="form-control" value="<%= @image.artist %>">
+      </div>
+
+      <!-- Label and input for theme -->
+      <div class="form-group">
+        <label for="theme" class="control-label">
+          Theme
+        </label>
+
+        <input type="text" id="theme" name="theme" placeholder="Theme" class="form-control" value="<%= @image.theme %>">
+      </div>
+
+      <!-- Label and input for mood -->
+      <div class="form-group">
+        <label for="mood" class="control-label">
+          Mood
+        </label>
+
+        <input type="text" id="mood" name="mood" placeholder="Mood" class="form-control" value="<%= @image.mood %>">
+      </div>
+
+      <!-- Label and input for primary_color -->
+      <div class="form-group">
+        <label for="primary_color" class="control-label">
+          Primary color
+        </label>
+
+        <textarea id="primary_color" name="primary_color" placeholder="Primary color" class="form-control" rows="3"><%= @image.primary_color %></textarea>
+      </div>
+
+      <!-- Label and input for secondary_color -->
+      <div class="form-group">
+        <label for="secondary_color" class="control-label">
+          Secondary color
+        </label>
+
+        <textarea id="secondary_color" name="secondary_color" placeholder="Secondary color" class="form-control" rows="3"><%= @image.secondary_color %></textarea>
+      </div>
+
+      <div class="form-group">
+        <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Image
+      </button>
+      or
+      <a href="/images">Cancel</a>
+    </form>
+  </div>
+</div>

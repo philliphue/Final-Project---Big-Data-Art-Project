@@ -1,0 +1,91 @@
+<div class="page-header">
+  <h1>
+    Projects
+    <a href="/projects/new" class="btn btn-lg btn-success">New Project</a>
+  </h1>
+</div>
+
+<div class="filter_options_container">
+
+<div class="container">
+  <div class="row">
+    <form action="/search_projects" method="get">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <div class="col-xs-6 col-md-3">
+        <div class="form-group">
+          <label for="theme" class="control-label">
+            Theme
+          </label>
+
+          <%= select_tag(:theme, options_from_collection_for_select(Project.select(:theme).distinct, :theme, :theme), :prompt => "Please select", :class => "form-control") %>
+        </div>
+      </div>
+
+
+      <div class="col-xs-6 col-md-3">
+        <div class="form-group">
+          <label for="theme" class="control-label">
+            Mood
+          </label>
+
+          <%= select_tag(:mood, options_from_collection_for_select(Project.select(:mood).distinct, :mood, :mood), :prompt => "Please select", :class => "form-control") %>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+        <div class="form-group">
+          <label for="primary_color" class="control-label">
+            Primary Color
+          </label>
+
+          <%= select_tag(:primary_color, options_from_collection_for_select(Project.select(:primary_color).distinct, :primary_color, :primary_color), :prompt => "Please select", :class => "form-control") %>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+        <div class="form-group">
+          <label for="secondary_color" class="control-label">
+            Secondary Color
+          </label>
+
+          <%= select_tag(:secondary_color, options_from_collection_for_select(Project.select(:secondary_color).distinct, :secondary_color, :secondary_color), :prompt => "Please select", :class => "form-control") %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <button class="btn btn-success">
+          Filter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @projects.each do |project| %>
+      <div class="col-xs-12 col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a href="/projects/<%= project.id %>"><%= project.project_title %></a>
+              <small>
+                Project by <%= project.user.username %>
+              </small>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <% @project_images.where({:project_id => project.id }).each do |image| %>
+              <div class="col-xs-8 col-md-4" class="img-responsive">
+                <a href="/images/<%= image.image_id %>" class="thumbnail" class="btn btn-primary">
+                  <td><img src="<%= image.image_url %>"></td>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
