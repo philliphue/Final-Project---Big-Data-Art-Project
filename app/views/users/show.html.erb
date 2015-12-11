@@ -37,7 +37,7 @@
             <div class="panel-body">
               <% @user.project_images.where({:project_id => project.id }).each do |image| %>
                 <div class="col-xs-8 col-md-4" class="img-responsive">
-                  <a href="/images/<%= image.id %>" class="thumbnail" class="btn btn-primary">
+                  <a href="/images/<%= image.image_id %>" class="thumbnail" class="btn btn-primary">
                     <td><img src="<%= image.image_url %>"></td>
                   </a>
                 </div>
